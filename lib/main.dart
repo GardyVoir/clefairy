@@ -1,4 +1,6 @@
-import 'package:clefairy/pokedex_frame.dart';
+import 'package:clefairy/pages/one.dart';
+import 'package:clefairy/pages/two.dart';
+import 'package:clefairy/pokedex_frames.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,10 +29,62 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 0;
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    final Size size = MediaQuery.of(context).size;
+    final List<Widget> pages = [
+      pageone(),
+      pagetwo()
+      // CategoryScreen(email: user.email),
+      // TabBarOrder(),
+      // PayInScreen(),
+      // ProfileScreen(),
+    ];
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(body: PokedexFrame()));
+        home: Scaffold(
+          body: Stack(children: [
+            Positioned(
+                top: 0,
+                child: Stack(children: [
+                  CustomPaint(size: Size(size.width, 80), painter: TopFrame()),
+                ])),
+            Positioned(
+                child: Align(
+                    alignment: Alignment.center,
+                    child: pages.elementAt(_currentIndex))),
+            Positioned(
+                bottom: 0,
+                child: Stack(
+                  children: [
+                    CustomPaint(
+                        size: Size(size.width, 160), painter: BottomFrame())
+                  ],
+                )),
+          ]),
+          bottomNavigationBar: BottomNavigationBar(
+            showSelectedLabels: true,
+            onTap: onTabTapped,
+            currentIndex: _currentIndex,
+            type: BottomNavigationBarType.fixed,
+            iconSize: 0,
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Menu'),
+              BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Order'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.play_circle_filled), label: 'Pay-in'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.play_circle_filled), label: 'Profile'),
+            ],
+          ),
+        ));
   }
 }
