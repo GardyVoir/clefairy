@@ -1,5 +1,7 @@
-import 'package:clefairy/pages/one.dart';
-import 'package:clefairy/pages/two.dart';
+import 'package:clefairy/pages/Carte.dart';
+import 'package:clefairy/pages/Pokemon.dart';
+import 'package:clefairy/pages/Attaques.dart';
+import 'package:clefairy/pages/Statistiques.dart';
 import 'package:clefairy/pokedex_frames.dart';
 import 'package:flutter/material.dart';
 
@@ -41,12 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final List<Widget> pages = [
-      pageone(),
-      pagetwo()
-      // CategoryScreen(email: user.email),
-      // TabBarOrder(),
-      // PayInScreen(),
-      // ProfileScreen(),
+      const Pokemon(),
+      const Attaques(),
+      const Carte(),
+      const Statistiques(),
     ];
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -69,22 +69,35 @@ class _MyHomePageState extends State<MyHomePage> {
                         size: Size(size.width, 160), painter: BottomFrame())
                   ],
                 )),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                height: 70,
+                child: BottomNavigationBar(
+                  backgroundColor: Colors.transparent,
+                  selectedItemColor: Colors.white,
+                  elevation: 0,
+                  showSelectedLabels: true,
+                  onTap: onTabTapped,
+                  currentIndex: _currentIndex,
+                  type: BottomNavigationBarType.fixed,
+                  iconSize: 20,
+                  items: const [
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.sports_baseball_outlined),
+                        label: 'Pokémon'),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.ac_unit_sharp), label: 'Attaques'),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.map_outlined), label: 'Carte'),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.stacked_bar_chart),
+                        label: 'Statistiques'),
+                  ],
+                ),
+              ),
+            ),
           ]),
-          bottomNavigationBar: BottomNavigationBar(
-            showSelectedLabels: true,
-            onTap: onTabTapped,
-            currentIndex: _currentIndex,
-            type: BottomNavigationBarType.fixed,
-            iconSize: 0,
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Menu'),
-              BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Order'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.play_circle_filled), label: 'Pay-in'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.play_circle_filled), label: 'Profile'),
-            ],
-          ),
         ));
   }
 }
