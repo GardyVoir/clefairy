@@ -3,6 +3,7 @@ import 'package:clefairy/pages/Pokemon.dart';
 import 'package:clefairy/pages/Attaques.dart';
 import 'package:clefairy/pages/Statistiques.dart';
 import 'package:clefairy/pokedex_frames.dart';
+import 'package:clefairy/services/pokemon_service.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -71,7 +72,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       isDense: false,
                       contentPadding: EdgeInsets.all(0),
                       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-                  onSubmitted: (text) {},
+                  onChanged: (text) {},
+                  onSubmitted: (text) async {
+                    var pokemon = await PokemonService().getPokemon(text);
+                  },
                 )),
             Positioned(child: Align(alignment: Alignment.center, child: pages.elementAt(_currentIndex))),
             Positioned(

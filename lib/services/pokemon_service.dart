@@ -1,6 +1,7 @@
 import 'package:clefairy/models/pokemon.dart';
 
 import '../api/api.dart';
+import '../models/pokemon_list.dart';
 
 class PokemonService {
   static PokemonService? _instance;
@@ -9,14 +10,14 @@ class PokemonService {
 
   PokemonService._();
 
-  Future<Pokemon> getAllPokemons() async {
+  Future<PokemonList> getAllPokemons() async {
     var response = await Api().dio.get('pokemon?limit=2000');
 
-    return Pokemon.fromJson(response.data);
+    return PokemonList.fromJson(response.data);
   }
 
-  Future<Pokemon> getPokemon(String id) async {
-    var response = await Api().dio.get('pokemon/{name}');
+  Future<Pokemon> getPokemon(String name) async {
+    var response = await Api().dio.get('pokemon/$name');
 
     return Pokemon.fromJson(response.data);
   }
