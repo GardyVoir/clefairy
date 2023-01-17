@@ -4,14 +4,14 @@ class TopFrame extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = const Color.fromRGBO(201, 45, 54, 1)
+      ..color = const Color.fromRGBO(201, 45, 54, 0.9)
       ..style = PaintingStyle.fill;
 
     Path path = Path();
     path.lineTo(0, 0);
-    path.lineTo(0, 70);
-    path.lineTo(size.width * 0.75, 70);
-    path.lineTo(size.width, 160);
+    path.lineTo(0, 90);
+    path.lineTo(size.width * 0.75, 90);
+    path.lineTo(size.width, 180);
     path.lineTo(size.width, 0);
     canvas.drawShadow(path, Colors.black, 5, true);
     canvas.drawPath(path, paint);

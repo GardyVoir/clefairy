@@ -57,17 +57,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Stack(children: [
                   CustomPaint(size: Size(size.width, 80), painter: TopFrame()),
                 ])),
-            Positioned(
-                child: Align(
-                    alignment: Alignment.center,
-                    child: pages.elementAt(_currentIndex))),
+            Positioned.fill(
+                top: 30,
+                left: 10,
+                right: 110,
+                child: TextField(
+                  decoration: const InputDecoration(
+                      fillColor: Colors.white54,
+                      filled: true,
+                      prefixIcon: Icon(Icons.search),
+                      hintText: "Rechercher un Pokémon...",
+                      isDense: false,
+                      contentPadding: EdgeInsets.all(0),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+                  onSubmitted: (text) {},
+                )),
+            Positioned(child: Align(alignment: Alignment.center, child: pages.elementAt(_currentIndex))),
             Positioned(
                 bottom: 0,
                 child: Stack(
-                  children: [
-                    CustomPaint(
-                        size: Size(size.width, 160), painter: BottomFrame())
-                  ],
+                  children: [CustomPaint(size: Size(size.width, 160), painter: BottomFrame())],
                 )),
             Align(
               alignment: Alignment.bottomCenter,
@@ -83,16 +92,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   type: BottomNavigationBarType.fixed,
                   iconSize: 20,
                   items: const [
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.sports_baseball_outlined),
-                        label: 'Pokémon'),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.ac_unit_sharp), label: 'Attaques'),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.map_outlined), label: 'Carte'),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.stacked_bar_chart),
-                        label: 'Statistiques'),
+                    BottomNavigationBarItem(icon: Icon(Icons.sports_baseball_outlined), label: 'Pokémon'),
+                    BottomNavigationBarItem(icon: Icon(Icons.ac_unit_sharp), label: 'Attaques'),
+                    BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Carte'),
+                    BottomNavigationBarItem(icon: Icon(Icons.stacked_bar_chart), label: 'Statistiques'),
                   ],
                 ),
               ),
