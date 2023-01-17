@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Stack(children: [
             Positioned(
                 top: 0,

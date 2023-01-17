@@ -9,9 +9,9 @@ class TopFrame extends CustomPainter {
 
     Path path = Path();
     path.lineTo(0, 0);
-    path.lineTo(0, 90);
-    path.lineTo(size.width * 0.75, 90);
-    path.lineTo(size.width, 180);
+    path.lineTo(0, 85);
+    path.lineTo(size.width * 0.75, 85);
+    path.lineTo(size.width, 175);
     path.lineTo(size.width, 0);
     canvas.drawShadow(path, Colors.black, 5, true);
     canvas.drawPath(path, paint);
