@@ -6,6 +6,10 @@ import 'package:clefairy/pokedex_frames.dart';
 import 'package:clefairy/services/pokemon_service.dart';
 import 'package:flutter/material.dart';
 
+
+
+
+
 void main() {
   runApp(const MyApp());
 }
