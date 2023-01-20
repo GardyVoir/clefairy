@@ -52,19 +52,28 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getAllPokemons();
     });
+    if (SharedPrefs().pokemon == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        getRandomPokemon();
+      });
+    }
   }
 
   getAllPokemons() async {
     var list = SharedPrefs().pokemonList;
     if (list == null || list.count == null || list.count == 0) {
-      SharedPrefs().pokemonList = await PokemonService().getAllPokemons();
+      await PokemonService().getAllPokemons();
     }
+  }
+
+  getRandomPokemon() async {
+    await PokemonService().getRandomPokemon();
   }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    late Pokemon pokemon = SharedPrefs().pokemon!;
+    late Pokemon? pokemon = SharedPrefs().pokemon;
     late List<Widget> pages = [
       Pokedex(pokemon: pokemon),
       Attaques(),
