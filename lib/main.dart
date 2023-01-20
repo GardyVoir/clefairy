@@ -44,8 +44,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
+    if (SharedPrefs().pokemonList == null) {
+      SharedPrefs().pokemonList = await PokemonService().getAllPokemons();
+    }
   }
 
   @override
