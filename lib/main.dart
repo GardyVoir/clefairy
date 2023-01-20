@@ -1,8 +1,8 @@
 import 'package:clefairy/components/search_bar.dart';
-import 'package:clefairy/pages/Carte.dart';
+import 'package:clefairy/pages/carte.dart';
 import 'package:clefairy/pages/pokedex.dart';
-import 'package:clefairy/pages/Attaques.dart';
-import 'package:clefairy/pages/Statistiques.dart';
+import 'package:clefairy/pages/attaques.dart';
+import 'package:clefairy/pages/statistiques.dart';
 import 'package:clefairy/pokedex_frames.dart';
 import 'package:clefairy/services/pokemon_service.dart';
 import 'package:clefairy/shared_preferences.dart';
