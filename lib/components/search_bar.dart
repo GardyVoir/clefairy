@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../services/pokemon_service.dart';
-import '../shared_preferencies.dart';
+import '../shared_preferences.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({super.key});
+class SearchBar extends StatelessWidget {
+  const SearchBar({super.key, required this.onPokemonSelect});
+  final StringCallback onPokemonSelect;
 
-  @override
-  _SearchBarState createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +35,7 @@ class _SearchBarState extends State<SearchBar> {
             }
           },
           onSelected: (String selection) async {
-            await PokemonService().getPokemon(selection);
+            onPokemonSelect(selection);
           },
           fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode,
               VoidCallback onFieldSubmitted) {
@@ -93,3 +89,5 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 }
+
+typedef StringCallback = void Function(String name);
