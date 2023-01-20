@@ -78,11 +78,11 @@ class _SearchBarState extends State<SearchBar> {
                             },
                             child: Container(
                                 color: Colors.transparent,
-                                padding: EdgeInsets.only(right: 120),
+                                padding: const EdgeInsets.only(right: 120),
                                 child: Card(
                                     child: Container(
                                   width: double.infinity,
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   child: Text(opt),
                                 ))));
                       }).toList(),
