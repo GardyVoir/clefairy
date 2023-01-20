@@ -4,9 +4,12 @@ import 'package:clefairy/pages/Attaques.dart';
 import 'package:clefairy/pages/Statistiques.dart';
 import 'package:clefairy/pokedex_frames.dart';
 import 'package:clefairy/services/pokemon_service.dart';
+import 'package:clefairy/shared_preferencies.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefs().init();
   runApp(const MyApp());
 }
 
@@ -41,13 +44,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final List<Widget> pages = [
-      const Pokemon(),
-      const Attaques(),
-      const Carte(),
-      const Statistiques(),
+      Pokemon(),
+      Attaques(),
+      Carte(),
+      Statistiques(),
     ];
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -74,7 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))),
                   onChanged: (text) {},
                   onSubmitted: (text) async {
-                    var pokemon = await PokemonService().getPokemon(text);
+                    var pok = SharedPrefs().pokemon;
+                    if (pok == null) {
+                      var pokemon = await PokemonService().getPokemon(text);
+                      SharedPrefs().pokemon = pokemon;
+                    }
                   },
                 )),
             Positioned(child: Align(alignment: Alignment.center, child: pages.elementAt(_currentIndex))),
