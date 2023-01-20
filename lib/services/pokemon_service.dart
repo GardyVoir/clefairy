@@ -1,5 +1,5 @@
 import 'package:clefairy/models/pokemon.dart';
-import 'package:clefairy/shared_preferencies.dart';
+import 'package:clefairy/shared_preferences.dart';
 
 import '../api/api.dart';
 import '../models/pokemon_list.dart';

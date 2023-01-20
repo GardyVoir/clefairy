@@ -1,21 +1,23 @@
 import 'package:clefairy/components/search_bar.dart';
 import 'package:clefairy/pages/Carte.dart';
-import 'package:clefairy/pages/Pokemon.dart';
+import 'package:clefairy/pages/pokedex.dart';
 import 'package:clefairy/pages/Attaques.dart';
 import 'package:clefairy/pages/Statistiques.dart';
 import 'package:clefairy/pokedex_frames.dart';
 import 'package:clefairy/services/pokemon_service.dart';
-import 'package:clefairy/shared_preferencies.dart';
+import 'package:clefairy/shared_preferences.dart';
 import 'package:flutter/material.dart';
+
+import 'models/pokemon.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefs().init();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -23,13 +25,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Clefairy',
       theme: ThemeData(),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -47,7 +49,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    getAllPokemons();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getAllPokemons();
+    });
   }
 
   getAllPokemons() async {
@@ -60,11 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final List<Widget> pages = [
-      const Pokemon(),
-      const Attaques(),
-      const Carte(),
-      const Statistiques(),
+    late Pokemon pokemon = SharedPrefs().pokemon!;
+    late List<Widget> pages = [
+      Pokedex(pokemon: pokemon),
+      Attaques(),
+      Carte(),
+      Statistiques(),
     ];
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -76,7 +81,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Stack(children: [
                   CustomPaint(size: Size(size.width, 80), painter: TopFrame()),
                 ])),
-            const Positioned.fill(top: 30, left: 10, right: 110, child: SearchBar()),
+            Positioned.fill(
+                top: 30,
+                left: 10,
+                right: 110,
+                child: SearchBar(
+                  onPokemonSelect: (name) async {
+                    if (name.isNotEmpty) {
+                      var result = await PokemonService().getPokemon(name.toLowerCase());
+                      setState(() {
+                        pokemon = result;
+                      });
+                    }
+                    setState(() {
+                      pages;
+                    });
+                  },
+                )),
             Positioned(child: Align(alignment: Alignment.center, child: pages.elementAt(_currentIndex))),
             Positioned(
                 bottom: 0,
@@ -96,11 +117,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   currentIndex: _currentIndex,
                   type: BottomNavigationBarType.fixed,
                   iconSize: 20,
-                  items: const [
-                    BottomNavigationBarItem(icon: Icon(Icons.sports_baseball_outlined), label: 'Pokémon'),
-                    BottomNavigationBarItem(icon: Icon(Icons.ac_unit_sharp), label: 'Attaques'),
-                    BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Carte'),
-                    BottomNavigationBarItem(icon: Icon(Icons.stacked_bar_chart), label: 'Statistiques'),
+                  items: [
+                    const BottomNavigationBarItem(icon: Icon(Icons.sports_baseball_outlined), label: 'Pokémon'),
+                    const BottomNavigationBarItem(icon: Icon(Icons.ac_unit_sharp), label: 'Attaques'),
+                    const BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Carte'),
+                    const BottomNavigationBarItem(icon: Icon(Icons.stacked_bar_chart), label: 'Statistiques'),
                   ],
                 ),
               ),

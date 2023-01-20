@@ -53,4 +53,4 @@ class SharedPrefs {
 
 // constants/strings.dart
 const String _pokemon = "pokemon";
-const String _pokemonList = "pokemon";
+const String _pokemonList = "pokemonList";
