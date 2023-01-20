@@ -1,4 +1,5 @@
 import 'package:clefairy/models/pokemon.dart';
+import 'package:clefairy/shared_preferences.dart';
 
 import '../api/api.dart';
 import '../models/pokemon_list.dart';
@@ -12,13 +13,15 @@ class PokemonService {
 
   Future<PokemonList> getAllPokemons() async {
     var response = await Api().dio.get('pokemon?limit=2000');
-
-    return PokemonList.fromJson(response.data);
+    var liste = PokemonList.fromJson(response.data);
+    SharedPrefs().pokemonList = liste;
+    return liste;
   }
 
   Future<Pokemon> getPokemon(String name) async {
     var response = await Api().dio.get('pokemon/$name');
-
-    return Pokemon.fromJson(response.data);
+    var pokemon = Pokemon.fromJson(response.data);
+    SharedPrefs().pokemon = pokemon;
+    return pokemon;
   }
 }
