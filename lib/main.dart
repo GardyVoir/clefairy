@@ -1,3 +1,4 @@
+import 'package:clefairy/components/search_bar.dart';
 import 'package:clefairy/pages/Carte.dart';
 import 'package:clefairy/pages/Pokemon.dart';
 import 'package:clefairy/pages/Attaques.dart';
@@ -50,7 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   getAllPokemons() async {
-    if (SharedPrefs().pokemonList == null) {
+    var list = SharedPrefs().pokemonList;
+    if (list == null || list.count == null || list.count == 0) {
       SharedPrefs().pokemonList = await PokemonService().getAllPokemons();
     }
   }
@@ -59,10 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final List<Widget> pages = [
-      Pokemon(),
-      Attaques(),
-      Carte(),
-      Statistiques(),
+      const Pokemon(),
+      const Attaques(),
+      const Carte(),
+      const Statistiques(),
     ];
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -74,28 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Stack(children: [
                   CustomPaint(size: Size(size.width, 80), painter: TopFrame()),
                 ])),
-            Positioned.fill(
-                top: 30,
-                left: 10,
-                right: 110,
-                child: TextField(
-                  decoration: const InputDecoration(
-                      fillColor: Colors.white54,
-                      filled: true,
-                      prefixIcon: Icon(Icons.search),
-                      hintText: "Rechercher un Pokémon...",
-                      isDense: false,
-                      contentPadding: EdgeInsets.all(0),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-                  onChanged: (text) {},
-                  onSubmitted: (text) async {
-                    var pok = SharedPrefs().pokemon;
-                    if (pok == null) {
-                      var pokemon = await PokemonService().getPokemon(text);
-                      SharedPrefs().pokemon = pokemon;
-                    }
-                  },
-                )),
+            const Positioned.fill(top: 30, left: 10, right: 110, child: SearchBar()),
             Positioned(child: Align(alignment: Alignment.center, child: pages.elementAt(_currentIndex))),
             Positioned(
                 bottom: 0,
