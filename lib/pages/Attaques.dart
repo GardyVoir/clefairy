@@ -1,11 +1,11 @@
 import 'package:clefairy/models/pokemon.dart';
-import 'package:clefairy/shared_preferencies.dart';
+import 'package:clefairy/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Attaques extends StatefulWidget {
   const Attaques({super.key});
-
+  
   @override
   State<Attaques> createState() => _AttaquesState();
 }
