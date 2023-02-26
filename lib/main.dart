@@ -1,21 +1,27 @@
-import 'package:clefairy/pages/Carte.dart';
-import 'package:clefairy/pages/pokemon.dart';
-import 'package:clefairy/pages/Attaques.dart';
-import 'package:clefairy/pages/Statistiques.dart';
+import 'package:clefairy/components/search_bar.dart';
+import 'package:clefairy/pages/carte.dart';
+import 'package:clefairy/pages/pokedex.dart';
+import 'package:clefairy/pages/attaques.dart';
+import 'package:clefairy/pages/statistiques.dart';
 import 'package:clefairy/pokedex_frames.dart';
 import 'package:clefairy/services/pokemon_service.dart';
+import 'package:clefairy/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'api/app_interceptors.dart';
 import 'models/pokemon.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'models/pokemon.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefs().init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -23,13 +29,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Clefairy',
       theme: ThemeData(),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -44,6 +50,30 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getAllPokemons();
+    });
+    if (SharedPrefs().pokemon == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        getRandomPokemon();
+      });
+    }
+  }
+
+  getAllPokemons() async {
+    var list = SharedPrefs().pokemonList;
+    if (list == null || list.count == null || list.count == 0) {
+      await PokemonService().getAllPokemons();
+    }
+  }
+
+  getRandomPokemon() async {
+    await PokemonService().getRandomPokemon();
+  }
+
   final GlobalKey<ScaffoldMessengerState> scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   Pokemon pokemon = Pokemon();
 
@@ -55,6 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
       const Attaques(),
       const Carte(),
       const Statistiques(),
+    late Pokemon? pokemon = SharedPrefs().pokemon;
+    late List<Widget> pages = [
+      Pokedex(pokemon: pokemon),
+      Attaques(),
+      Carte(),
+      Statistiques(),
     ];
     return ScaffoldMessenger(
       key: scaffoldKey,
@@ -70,7 +106,19 @@ class _MyHomePageState extends State<MyHomePage> {
               top: 30,
               left: 10,
               right: 110,
-              child: TextField(
+              child: 
+              SearchBar(
+                  onPokemonSelect: (name) async {
+                    if (name.isNotEmpty) {
+                      var result = await PokemonService().getPokemon(name.toLowerCase());
+                      setState(() {
+                        pokemon = result;
+                      });
+                    }
+                    setState(() {
+                      pages;
+                    });
+                    TextField(
                 decoration: const InputDecoration(
                     fillColor: Colors.white54,
                     filled: true,
