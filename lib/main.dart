@@ -1,4 +1,4 @@
-import 'package:clefairy/components/search_bar.dart';
+import 'package:clefairy/widgets/search_bar.dart';
 import 'package:clefairy/pages/carte.dart';
 import 'package:clefairy/pages/pokedex.dart';
 import 'package:clefairy/pages/attaques.dart';
@@ -9,19 +9,16 @@ import 'package:clefairy/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'api/app_interceptors.dart';
-import 'models/pokemon.dart';
-
 import 'models/pokemon.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefs().init();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -29,13 +26,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Clefairy',
       theme: ThemeData(),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -80,13 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    Pokemon pokemon = SharedPrefs().pokemon ?? Pokemon();
     List<Widget> pages = [
-      PokemonPage(pokemon: pokemon),
-      const Attaques(),
-      const Carte(),
-      const Statistiques(),
-    late Pokemon? pokemon = SharedPrefs().pokemon;
-    late List<Widget> pages = [
       Pokedex(pokemon: pokemon),
       Attaques(),
       Carte(),
@@ -106,45 +98,27 @@ class _MyHomePageState extends State<MyHomePage> {
               top: 30,
               left: 10,
               right: 110,
-              child: 
-              SearchBar(
-                  onPokemonSelect: (name) async {
-                    if (name.isNotEmpty) {
-                      var result = await PokemonService().getPokemon(name.toLowerCase());
-                      setState(() {
-                        pokemon = result;
-                      });
-                    }
-                    setState(() {
-                      pages;
-                    });
-                    TextField(
-                decoration: const InputDecoration(
-                    fillColor: Colors.white54,
-                    filled: true,
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Rechercher un Pokémon...",
-                    isDense: false,
-                    contentPadding: EdgeInsets.all(0),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-                onChanged: (text) {},
-                onSubmitted: (text) async {
-                  try {
-                    var result = await PokemonService().getPokemon(text.trim().toLowerCase());
+              child: SearchBar(onPokemonSelect: (name) async {
+                try {
+                  if (name.isNotEmpty) {
+                    var result = await PokemonService().getPokemon(name.trim().toLowerCase());
                     setState(() {
                       pokemon = result;
                     });
-                  } on DioError catch (_) {
-                    scaffoldKey.currentState?.showSnackBar(const SnackBar(
-                      content: Text("Le pokémon est introuvable"),
-                    ));
-                  } catch (_) {
-                    scaffoldKey.currentState?.showSnackBar(const SnackBar(
-                      content: Text("Une erreur s'est produite"),
-                    ));
                   }
-                },
-              )),
+                  setState(() {
+                    pages;
+                  });
+                } on DioError catch (_) {
+                  scaffoldKey.currentState?.showSnackBar(const SnackBar(
+                    content: Text("Le pokémon est introuvable"),
+                  ));
+                } catch (_) {
+                  scaffoldKey.currentState?.showSnackBar(const SnackBar(
+                    content: Text("Une erreur s'est produite"),
+                  ));
+                }
+              })),
           Positioned(child: Align(alignment: Alignment.center, child: pages.elementAt(_currentIndex))),
           Positioned(
               bottom: 0,
