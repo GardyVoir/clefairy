@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
     late Pokemon? pokemon = SharedPrefs().pokemon;
     late List<Widget> pages = [
       Pokedex(pokemon: pokemon),
-      Attaques(),
+      Attaques(pokemon: pokemon),
       Carte(),
       Statistiques(),
     ];

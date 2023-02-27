@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Attaques extends StatefulWidget {
-  const Attaques({super.key});
+  const Attaques({super.key, required this.pokemon});
   
+  final Pokemon? pokemon;
   @override
   State<Attaques> createState() => _AttaquesState();
 }
@@ -19,6 +20,7 @@ class _AttaquesState extends State<Attaques> {
           SafeArea(
             child: GestureDetector(
               child: Container(
+                
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,9 +34,9 @@ class _AttaquesState extends State<Attaques> {
                           // height: MediaQuery.of(context).size.height*0.7,
                           width: MediaQuery.of(context).size.width,
                           child: Column(
-                            children: [
+                            children:  [
                               Text(
-                                "Attaques de base",
+                               "Attaques de base: ${widget.pokemon?.moves!.join(', ')}",
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w600,
@@ -58,13 +60,11 @@ class _AttaquesState extends State<Attaques> {
                                         Padding(
                                           padding: const EdgeInsets.only(top: 10),
                                           child: Container(
-                                              height: 50,
                                               width: MediaQuery.of(context).size.width * 0.85,
                                               margin: const EdgeInsets.only(bottom: 20),
                                               child: Column(
                                                 children: [
                                                   Row(
-                                                    
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Container(
@@ -76,7 +76,6 @@ class _AttaquesState extends State<Attaques> {
                                                         ),
                                                         child: const Center(
                                                           child: Text(
-                                                            
                                                             "Attaque 1",
                                                             style: TextStyle(
                                                               fontSize: 15,
@@ -106,7 +105,9 @@ class _AttaquesState extends State<Attaques> {
                                                       ),
                                                     ],
                                                   ),
-                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  Spacer(),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Container(
                                                         height: 35,
@@ -144,7 +145,8 @@ class _AttaquesState extends State<Attaques> {
                                                           ),
                                                         ),
                                                       ),
-                                                    ],)
+                                                    ],
+                                                  )
                                                 ],
                                               )),
                                         ),
@@ -166,13 +168,12 @@ class _AttaquesState extends State<Attaques> {
                                             ),
                                           ),
                                         ),
-                                        
                                       ],
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              /* SizedBox(
                                 height: 15,
                               ),
                               Text("",
@@ -369,85 +370,8 @@ class _AttaquesState extends State<Attaques> {
                                           ],
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              height: 35,
-                                              width: MediaQuery
-                                                  .of(context)
-                                                  .size
-                                                  .width * 0.3,
-                                              decoration: BoxDecoration(
-                                                
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10),
-                                                  bottomLeft: Radius.circular(
-                                                      10),
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: Text("Sp. Defense",
-                                                  style: TextStyle(
-                                                    fontSize: 14.5,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black
-                                                        .withOpacity(0.75),
-                                                  ),),
-                                              ),
-                                            ),
-                                            
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              height: 35,
-                                              width: MediaQuery
-                                                  .of(context)
-                                                  .size
-                                                  .width * 0.3,
-                                              decoration: BoxDecoration(
-                                               
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10),
-                                                  bottomLeft: Radius.circular(
-                                                      10),
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: Text("Hello",
-                                                  style: TextStyle(
-                                                    fontSize: 14.5,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black
-                                                        .withOpacity(0.75),
-                                                  ),),
-                                              ),
-                                            ),
-                                            
-                                               Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 10),
-                                                child: Text(
-                                                 "hello",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.black
-                                                        .withOpacity(0.7),
-                                                  ),),
-                                              ),
-                                            
-                                          ],
-                                        ),
-                                      ),
+                                      
+                                      
                                       Container(
                                         alignment: Alignment.center,
                                         height: 20,
@@ -479,7 +403,7 @@ class _AttaquesState extends State<Attaques> {
                                       )
                                     ],
                                   ),
-                                ),
+                                ), */
                             ],
                           ),
                         ),
