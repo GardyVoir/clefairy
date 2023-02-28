@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Pokedex(pokemon: pokemon),
       Attaques(pokemon: pokemon),
       Carte(),
-      Statistiques(),
+      Statistiques(pokemon: pokemon),
     ];
     return ScaffoldMessenger(
       key: scaffoldKey,
