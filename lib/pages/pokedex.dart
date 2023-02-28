@@ -47,7 +47,7 @@ class _PokedexState extends State<Pokedex> {
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                       Text(widget.pokemon.types?[0].type?.name?.capitalize() ?? ""),
-                      Text(widget.pokemon.types?.length == 2 ? widget.pokemon.types![1].type!.name!.capitalize() : "")
+                      Text(widget.pokemon.types?.length == 2 ? widget.pokemon.types![1].type!.name!.capitalize() : ""),
                     ])
                   ],
                 ),

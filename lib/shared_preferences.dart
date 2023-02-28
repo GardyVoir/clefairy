@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:clefairy/models/pokemon_list.dart';
-import 'package:clefairy/services/pokemon_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/pokemon.dart';
@@ -15,7 +14,6 @@ class SharedPrefs {
 
   Future<void> init() async {
     _sharedPrefs = await SharedPreferences.getInstance();
-    reset();
   }
 
   Pokemon? get pokemon {
