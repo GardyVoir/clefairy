@@ -100,9 +100,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final Size size = MediaQuery.of(context).size;
     List<Widget> pages = [
       Pokedex(pokemon: pokemon),
-      const Attaques(pokemon: pokemon),
+      Attaques(pokemon: pokemon),
       const Carte(),
-      const Statistiques(pokemon: pokemon),
+      Statistiques(pokemon: pokemon),
     ];
 
     return ScaffoldMessenger(
