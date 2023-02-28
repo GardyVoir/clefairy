@@ -8,11 +8,11 @@ class AppInterceptors extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     switch (err.type) {
-      case DioErrorType.connectTimeout:
+      case DioErrorType.connectionTimeout:
       case DioErrorType.sendTimeout:
       case DioErrorType.receiveTimeout:
         throw DeadlineExceededException(err.requestOptions);
-      case DioErrorType.response:
+      case DioErrorType.unknown:
         switch (err.response?.statusCode) {
           case 400:
             throw BadRequestException(err.requestOptions);
@@ -28,7 +28,7 @@ class AppInterceptors extends Interceptor {
         break;
       case DioErrorType.cancel:
         break;
-      case DioErrorType.other:
+      default:
         throw NoInternetConnectionException(err.requestOptions);
     }
 
