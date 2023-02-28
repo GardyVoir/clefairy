@@ -23,7 +23,6 @@ class PokemonService {
   Future<Pokemon> getPokemon(String name) async {
     var response = await Api().dio.get('pokemon/$name');
     var pokemon = Pokemon.fromJson(response.data);
-    SharedPrefs().pokemon = pokemon;
     return pokemon;
   }
 
@@ -32,7 +31,6 @@ class PokemonService {
     int randomNumber = random.nextInt(152);
     var response = await Api().dio.get('pokemon/$randomNumber');
     var pokemon = Pokemon.fromJson(response.data);
-    SharedPrefs().pokemon = pokemon;
     return pokemon;
   }
 }
