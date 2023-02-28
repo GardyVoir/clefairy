@@ -109,67 +109,69 @@ class _MyHomePageState extends State<MyHomePage> {
       key: scaffoldKey,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Stack(children: [
-            (_isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Positioned(child: Align(alignment: Alignment.center, child: pages.elementAt(_currentIndex)))),
-            Positioned(
-                top: 0,
-                child: Stack(children: [
-                  CustomPaint(size: Size(size.width, 80), painter: TopFrame()),
-                ])),
-            Positioned.fill(
-                top: 30,
-                left: 10,
-                right: 110,
-                child: SearchBar(onPokemonSelect: (name) async {
-                  try {
-                    if (name.isNotEmpty) {
-                      var result = await PokemonService().getPokemon(name.trim().toLowerCase());
-                      setState(() {
-                        pokemon = result;
-                      });
+          body: SafeArea(
+            child: Stack(children: [
+              (_isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Positioned(child: Align(alignment: Alignment.center, child: pages.elementAt(_currentIndex)))),
+              Positioned(
+                  top: 0,
+                  child: Stack(children: [
+                    CustomPaint(size: Size(size.width, 80), painter: TopFrame()),
+                  ])),
+              Positioned.fill(
+                  top: 20,
+                  left: 10,
+                  right: 110,
+                  child: SearchBar(onPokemonSelect: (name) async {
+                    try {
+                      if (name.isNotEmpty) {
+                        var result = await PokemonService().getPokemon(name.trim().toLowerCase());
+                        setState(() {
+                          pokemon = result;
+                        });
+                      }
+                    } on DioError catch (_) {
+                      scaffoldKey.currentState?.showSnackBar(const SnackBar(
+                        content: Text("Le pokémon est introuvable"),
+                      ));
+                    } catch (_) {
+                      scaffoldKey.currentState?.showSnackBar(const SnackBar(
+                        content: Text("Une erreur s'est produite"),
+                      ));
                     }
-                  } on DioError catch (_) {
-                    scaffoldKey.currentState?.showSnackBar(const SnackBar(
-                      content: Text("Le pokémon est introuvable"),
-                    ));
-                  } catch (_) {
-                    scaffoldKey.currentState?.showSnackBar(const SnackBar(
-                      content: Text("Une erreur s'est produite"),
-                    ));
-                  }
-                })),
-            Positioned(
-                bottom: 0,
-                child: Stack(
-                  children: [CustomPaint(size: Size(size.width, 160), painter: BottomFrame())],
-                )),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                height: 70,
-                child: BottomNavigationBar(
-                  backgroundColor: Colors.transparent,
-                  selectedItemColor: Colors.white,
-                  elevation: 0,
-                  showSelectedLabels: true,
-                  onTap: onTabTapped,
-                  currentIndex: _currentIndex,
-                  type: BottomNavigationBarType.fixed,
-                  iconSize: 20,
-                  items: const [
-                    BottomNavigationBarItem(icon: Icon(Icons.sports_baseball_outlined), label: 'Pokémon'),
-                    BottomNavigationBarItem(icon: Icon(Icons.ac_unit_sharp), label: 'Attaques'),
-                    BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Carte'),
-                    BottomNavigationBarItem(icon: Icon(Icons.stacked_bar_chart), label: 'Statistiques'),
-                  ],
+                  })),
+              Positioned(
+                  bottom: 0,
+                  child: Stack(
+                    children: [CustomPaint(size: Size(size.width, 160), painter: BottomFrame())],
+                  )),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  height: 70,
+                  child: BottomNavigationBar(
+                    backgroundColor: Colors.transparent,
+                    selectedItemColor: Colors.white,
+                    elevation: 0,
+                    showSelectedLabels: true,
+                    onTap: onTabTapped,
+                    currentIndex: _currentIndex,
+                    type: BottomNavigationBarType.fixed,
+                    iconSize: 20,
+                    items: const [
+                      BottomNavigationBarItem(icon: Icon(Icons.sports_baseball_outlined), label: 'Pokémon'),
+                      BottomNavigationBarItem(icon: Icon(Icons.ac_unit_sharp), label: 'Attaques'),
+                      BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Carte'),
+                      BottomNavigationBarItem(icon: Icon(Icons.stacked_bar_chart), label: 'Statistiques'),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ])),
+            ]),
+          )),
     );
   }
 }
