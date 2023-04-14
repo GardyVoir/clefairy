@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:clefairy/models/location_area_encounters.dart';
 import 'package:clefairy/models/pokemon.dart';
 import 'package:clefairy/shared_preferences.dart';
 
@@ -34,5 +35,12 @@ class PokemonService {
     var pokemon = Pokemon.fromJson(response.data);
     SharedPrefs().pokemon = pokemon;
     return pokemon;
+  }
+
+  Future<List<LocationAreaEncounter>> getLocation(String name) async {
+    var response = await Api().dio.get('pokemon/$name/encounters');
+   var locationareaencounters = List<LocationAreaEncounter>.from(response.data.map((x) => LocationAreaEncounter.fromJson(x)));
+    
+    return locationareaencounters;
   }
 }

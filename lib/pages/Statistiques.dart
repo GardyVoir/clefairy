@@ -70,6 +70,10 @@ class _StatistiquesState extends State<Statistiques> {
         padding: const EdgeInsets.only(top: 120),
         child: Column(
           children: [
+            const Text(
+              "Statistiques",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
             Expanded(
               child: ListView(
                 shrinkWrap: true,
