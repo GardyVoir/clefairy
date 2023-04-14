@@ -1,7 +1,7 @@
 import 'package:clefairy/models/pokemon.dart';
 import 'package:flutter/material.dart';
 
-enum DisplayMode { defaultMoves, otherMoves }
+enum DisplayMode { defaultMoves, otherMoves, allMoves }
 
 class Attaques extends StatefulWidget {
   const Attaques({Key? key, required this.pokemon}) : super(key: key);
@@ -13,7 +13,7 @@ class Attaques extends StatefulWidget {
 
 class _AttaquesState extends State<Attaques> {
   final ScrollController _scrollController = ScrollController();
-  DisplayMode _displayMode = DisplayMode.defaultMoves;
+  DisplayMode _displayMode = DisplayMode.allMoves;
 
   @override
   void initState() {
@@ -44,6 +44,34 @@ class _AttaquesState extends State<Attaques> {
         ) ??
         false);
 
+     final allMoves = [...defaultMoves, ...otherMoves];
+
+    final allMovesList = allMoves.map((move) {
+      return Container(
+        child: Container(
+          child: Text(
+            move.move?.name ?? "-",
+            style: TextStyle(fontSize: 20),
+          ),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Color.fromRGBO(201, 45, 54, 0.9),
+                width: 2,
+              ),
+              top: BorderSide(
+                color: Color.fromRGBO(201, 45, 54, 0.9),
+                width: 2,
+              ),
+            ),
+          ),
+          padding: const EdgeInsets.only(bottom: 10, top: 10),
+        ),
+      );
+    }).toList();
+
+    
+    
     final defaultMovesList = defaultMoves.map((move) {
       return Container(
         child: Container(
@@ -147,14 +175,33 @@ class _AttaquesState extends State<Attaques> {
                         ),
                       );
                     },
-                    child: Image.asset(
-                      'assets/icons/menu.png',
+                    child: Container(
                       width: 50,
                       height: 50,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(201, 45, 54, 0.9), // Set the background color here
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0), // Add padding here
+                        child: Image.asset(
+                          'assets/icons/menu.png',
+                          width: 30,
+                          height: 30,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
+               if (_displayMode == DisplayMode.allMoves)
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: allMovesList.length,
+                    itemBuilder: (context, index) => allMovesList[index],
+                  ),
+                ),
               if (_displayMode == DisplayMode.defaultMoves)
                 Expanded(
                   child: ListView.builder(
@@ -178,10 +225,13 @@ class _AttaquesState extends State<Attaques> {
           bottom: 0,
           left: 0,
           right: 0,
-          child: Image.asset(
-            'assets/icons/menu.png',
-            width: 50,
-            height: 50,
+          child: Container(
+            color: Colors.red,
+            child: Image.asset(
+              'assets/icons/menu.png',
+              width: 50,
+              height: 50,
+            ),
           ),
         ),
       ],
