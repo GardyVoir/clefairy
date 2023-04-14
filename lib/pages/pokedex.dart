@@ -95,6 +95,42 @@ class _PokedexState extends State<Pokedex> {
               ],
             )
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Taille : ${widget.pokemon.height! * 10} cm",
+                style: const TextStyle(fontSize: 20),
+              ),
+              Text(
+                "Poids : ${widget.pokemon.weight! * 10} g",
+                style: const TextStyle(fontSize: 20),
+              ),
+              SizedBox(
+                height: 280,
+                child: ListView.builder(
+                  itemCount: widget.pokemon.abilities!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: <Widget>[
+                        index == 0
+                            ? Text(textAlign: TextAlign.left, '\r\nTalents :', style: const TextStyle(fontSize: 20))
+                            : Container(),
+                        ListTile(
+                          title: Text(" - ${widget.pokemon.abilities![index].ability!.name!.capitalize()}",
+                              style: const TextStyle(fontSize: 20)),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
         )
       ],
     );
