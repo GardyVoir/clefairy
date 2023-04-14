@@ -61,9 +61,12 @@ class _AttaquesState extends State<Attaques> {
           ),
         ),
         padding: const EdgeInsets.only(bottom: 10, top: 10),
-        child: Text(
-          move.move?.name ?? "-",
-          style: const TextStyle(fontSize: 20),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            move.move?.name ?? "-",
+            style: const TextStyle(fontSize: 20),
+          ),
         ),
       );
     }).toList();
