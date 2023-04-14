@@ -36,6 +36,7 @@ class SearchBar extends StatelessWidget {
           },
           onSelected: (String selection) async {
             onPokemonSelect(selection);
+            FocusScope.of(context).unfocus();
           },
           fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode,
               VoidCallback onFieldSubmitted) {
