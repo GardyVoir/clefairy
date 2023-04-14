@@ -1,3 +1,4 @@
+import 'package:clefairy/widgets/type.dart';
 import 'package:flutter/material.dart';
 
 import '../models/pokemon.dart';
@@ -11,7 +12,7 @@ class Pokedex extends StatefulWidget {
 
 extension StringExtension on String? {
   String capitalize() {
-    return this == null ? "" : "${this!.substring(0, 1).toUpperCase()}${this!.substring(1)}";
+    return this == null || this!.isEmpty ? "" : "${this!.substring(0, 1).toUpperCase()}${this!.substring(1)}";
   }
 }
 
@@ -46,8 +47,8 @@ class _PokedexState extends State<Pokedex> {
                           ]),
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                      Text(widget.pokemon.types?[0].type?.name?.capitalize() ?? ""),
-                      Text(widget.pokemon.types?.length == 2 ? widget.pokemon.types![1].type!.name!.capitalize() : ""),
+                      Type(typeString: widget.pokemon.types?[0].type?.name ?? ""),
+                      Type(typeString: widget.pokemon.types?.length == 2 ? widget.pokemon.types![1].type!.name! : ""),
                     ])
                   ],
                 ),
