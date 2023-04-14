@@ -44,78 +44,70 @@ class _AttaquesState extends State<Attaques> {
         ) ??
         false);
 
-     final allMoves = [...defaultMoves, ...otherMoves];
+    final allMoves = [...defaultMoves, ...otherMoves];
 
     final allMovesList = allMoves.map((move) {
       return Container(
-        child: Container(
-          child: Text(
-            move.move?.name ?? "-",
-            style: TextStyle(fontSize: 20),
-          ),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Color.fromRGBO(201, 45, 54, 0.9),
-                width: 2,
-              ),
-              top: BorderSide(
-                color: Color.fromRGBO(201, 45, 54, 0.9),
-                width: 2,
-              ),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Color.fromRGBO(201, 45, 54, 0.9),
+              width: 2,
+            ),
+            top: BorderSide(
+              color: Color.fromRGBO(201, 45, 54, 0.9),
+              width: 2,
             ),
           ),
-          padding: const EdgeInsets.only(bottom: 10, top: 10),
+        ),
+        padding: const EdgeInsets.only(bottom: 10, top: 10),
+        child: Text(
+          move.move?.name ?? "-",
+          style: const TextStyle(fontSize: 20),
         ),
       );
     }).toList();
 
-    
-    
     final defaultMovesList = defaultMoves.map((move) {
       return Container(
-        child: Container(
-          child: Text(
-            move.move?.name ?? "-",
-            style: TextStyle(fontSize: 20),
-          ),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Color.fromRGBO(201, 45, 54, 0.9),
-                width: 2,
-              ),
-              top: BorderSide(
-                color: Color.fromRGBO(201, 45, 54, 0.9),
-                width: 2,
-              ),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Color.fromRGBO(201, 45, 54, 0.9),
+              width: 2,
+            ),
+            top: BorderSide(
+              color: Color.fromRGBO(201, 45, 54, 0.9),
+              width: 2,
             ),
           ),
-          padding: const EdgeInsets.only(bottom: 10, top: 10),
+        ),
+        padding: const EdgeInsets.only(bottom: 10, top: 10),
+        child: Text(
+          move.move?.name ?? "-",
+          style: const TextStyle(fontSize: 20),
         ),
       );
     }).toList();
 
     final otherMovesList = otherMoves.map((move) {
       return Container(
-        child: Container(
-          child: Text(
-            move.move?.name ?? "-",
-            style: TextStyle(fontSize: 20),
-          ),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Color.fromRGBO(201, 45, 54, 0.9),
-                width: 2,
-              ),
-              top: BorderSide(
-                color: Color.fromRGBO(201, 45, 54, 0.9),
-                width: 2,
-              ),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Color.fromRGBO(201, 45, 54, 0.9),
+              width: 2,
+            ),
+            top: BorderSide(
+              color: Color.fromRGBO(201, 45, 54, 0.9),
+              width: 2,
             ),
           ),
-          padding: const EdgeInsets.only(bottom: 10, top: 10),
+        ),
+        padding: const EdgeInsets.only(bottom: 10, top: 10),
+        child: Text(
+          move.move?.name ?? "-",
+          style: const TextStyle(fontSize: 20),
         ),
       );
     }).toList();
@@ -179,7 +171,7 @@ class _AttaquesState extends State<Attaques> {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(201, 45, 54, 0.9), // Set the background color here
+                        color: const Color.fromRGBO(201, 45, 54, 0.9), // Set the background color here
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: Padding(
@@ -194,7 +186,7 @@ class _AttaquesState extends State<Attaques> {
                   ),
                 ],
               ),
-               if (_displayMode == DisplayMode.allMoves)
+              if (_displayMode == DisplayMode.allMoves)
                 Expanded(
                   child: ListView.builder(
                     controller: _scrollController,

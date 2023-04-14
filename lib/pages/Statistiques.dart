@@ -21,11 +21,11 @@ class StatGauge extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           width: double.infinity,
           height: 12,
@@ -37,13 +37,13 @@ class StatGauge extends StatelessWidget {
             widthFactor: percentage,
             child: Container(
               decoration: BoxDecoration(
-                color: Color.fromRGBO(201, 45, 54, 0.9),
+                color: const Color.fromRGBO(201, 45, 54, 0.9),
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
       ],
     );
   }
@@ -74,21 +74,19 @@ class _StatistiquesState extends State<Statistiques> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  Container(
-                    child: SingleChildScrollView(
-                      physics: ClampingScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 2),
-                          for (var stat in stats)
-                            StatGauge(
-                              label: stat.stat?.name ?? '',
-                              value: stat.baseStat!.toDouble().toInt(),
-                              maxValue: 120,
-                            ),
-                        ],
-                      ),
+                  SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 2),
+                        for (var stat in stats)
+                          StatGauge(
+                            label: stat.stat?.name ?? '',
+                            value: stat.baseStat!.toDouble().toInt(),
+                            maxValue: 120,
+                          ),
+                      ],
                     ),
                   ),
                 ],
