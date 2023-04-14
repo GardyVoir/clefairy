@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> pages = [
       Pokedex(pokemon: pokemon),
       Attaques(pokemon: pokemon),
-      const Carte(),
+      Carte(pokemon: pokemon),
       Statistiques(pokemon: pokemon),
     ];
 

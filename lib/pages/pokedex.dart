@@ -1,6 +1,5 @@
 import 'package:clefairy/widgets/type.dart';
 import 'package:flutter/material.dart';
-
 import '../models/pokemon.dart';
 
 class Pokedex extends StatefulWidget {

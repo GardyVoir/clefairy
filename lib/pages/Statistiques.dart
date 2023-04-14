@@ -1,6 +1,54 @@
 import 'package:clefairy/models/pokemon.dart';
 import 'package:flutter/material.dart';
 
+class StatGauge extends StatelessWidget {
+  final String label;
+  final int? value;
+  final int maxValue;
+
+  const StatGauge({
+    Key? key,
+    required this.label,
+    required this.value,
+    required this.maxValue,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final percentage = (value?.toDouble() ?? 0) / maxValue.clamp(1, maxValue).toDouble();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          width: double.infinity,
+          height: 12,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: FractionallySizedBox(
+            widthFactor: percentage,
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(201, 45, 54, 0.9),
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+}
+
 class Statistiques extends StatefulWidget {
   const Statistiques({Key? key, required this.pokemon}) : super(key: key);
 
@@ -16,37 +64,40 @@ class _StatistiquesState extends State<Statistiques> {
     if (stats == null || stats.isEmpty) {
       return const Text("No stats found");
     }
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                Container(
-                  child: SingleChildScrollView(
-                    physics: ClampingScrollPhysics(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Container(
+        padding: const EdgeInsets.only(top: 120),
+        child: Column(
+          children: [
+            const Text(
+              "Statistiques",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Stats:",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
                         const SizedBox(height: 2),
                         for (var stat in stats)
-                          Center(
-                            child: Text("${stat.stat?.name}: ${stat.baseStat}"),
+                          StatGauge(
+                            label: stat.stat?.name ?? '',
+                            value: stat.baseStat!.toDouble().toInt(),
+                            maxValue: 120,
                           ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
